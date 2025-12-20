@@ -1,0 +1,59 @@
+# Build outputs
+bin/
+x64/
+Debug/
+Release/
+*.exe
+*.dll
+*.obj
+*.o
+*.a
+*.lib
+*.so
+*.dylib
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.sln.docstates
+*.vcxproj.user
+*.sln.cache
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# Build artifacts
+*.iobj
+*.ipdb
+*.ilk
+*.pdb
+*.recipe
+intermediate/
+
+# ImGui
+imgui.ini
+
+# CMake
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Screenshots (optional - uncomment if you want to exclude)
+# Screenshots/
+# *.png
+# *.jpg
