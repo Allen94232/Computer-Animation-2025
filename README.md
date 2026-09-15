@@ -1,132 +1,86 @@
-# Computer Animation — Physics, Simulation, and Character Systems
+# Computer Animation — Simulation and Character Systems
 
-A collection of computer-animation projects implemented in C++/OpenGL and Unity. The repository focuses on physically based simulation, skeletal animation, numerical integration, and interactive character storytelling.
+A collection of computer-animation coursework implemented in C++/OpenGL and Unity. The projects cover physically based simulation, skeletal animation, numerical integration, and interactive character animation.
 
-The three C++ assignments were completed individually. The Unity final project was developed as a team project; my specific contributions are listed separately below.
+> This repository contains course starter code, third-party libraries, and project assets where applicable. The descriptions below focus on the systems represented by the source code in this repository.
 
-> Portfolio note: This repository originated from the Computer Animation course in Spring 2025. Starter code and course-provided assets remain where applicable; the implementation summaries below identify the systems I completed.
+## Projects
 
-## Highlights
-
-| Project | Core implementation | Stack |
+| Project | Focus | Stack |
 | --- | --- | --- |
-| [Soft-Body Simulation](#1-soft-body-simulation) | 3D mass–spring model, four time-integration modes, terrain collision | C++, OpenGL, Eigen, ImGui |
-| [Inverse Kinematics](#2-inverse-kinematics) | Forward kinematics, Jacobian-based IK, pseudoinverse solve, skeletal hierarchy | C++, OpenGL, Eigen |
-| [2D Fluid Simulation](#3-2d-fluid-simulation) | PIC/FLIP transfer, MAC grid, incompressibility solve, density correction | C++, OpenGL, Eigen |
-| [Interactive Character Animation](#4-interactive-character-animation-team-project) | Timeline-driven character storytelling and synchronized audiovisual effects | Unity, C#, Timeline, URP |
+| [HW1 — Soft-Body Simulation](#hw1--soft-body-simulation) | 3D mass–spring simulation, numerical integration, terrain collision | C++, OpenGL, Eigen, ImGui |
+| [HW2 — Inverse Kinematics](#hw2--inverse-kinematics) | Skeletal hierarchy, forward kinematics, Jacobian-based IK | C++, OpenGL, Eigen |
+| [HW3 — 2D Fluid Simulation](#hw3--2d-fluid-simulation) | Particle/grid transfer, PIC/FLIP blending, incompressibility correction | C++, OpenGL, Eigen |
+| [Final Project — Interactive Character Animation](#final-project--interactive-character-animation) | Timeline-driven character scenes and synchronized audiovisual effects | Unity, C#, Timeline, URP |
 
-<!-- Replace the path below after adding a 20–30 second overview GIF. -->
-![Project overview](docs/media/overview.gif)
+## HW1 — Soft-Body Simulation
 
-## 1. Soft-Body Simulation
+An interactive deformable-body simulation using a particle-based mass–spring system.
 
-An interactive 3D jelly simulation built with a particle-based mass–spring system. Particles are connected with structural, shear, and bend springs, allowing the model to deform while retaining its overall volume and shape.
+Key systems in the source:
 
-### What I implemented
+- Structural, shear, and bend springs
+- Elastic and damping force accumulation
+- Explicit Euler, Midpoint Euler, Runge–Kutta, and the project's `ImplicitEuler` update mode
+- Terrain collision and response
+- Runtime parameter controls and OpenGL visualization
 
-- Constructed and updated the particle–spring system, including per-particle force accumulation.
-- Modeled elastic and damping forces for structural, shear, and bend springs.
-- Implemented selectable time-stepping modes: Explicit Euler, a predictor/corrector-style update labeled `ImplicitEuler` in the project, Midpoint Euler, and fourth-order Runge–Kutta.
-- Implemented collision detection and response between the deformable body and the terrain/elevator scene.
-- Connected simulation parameters to an ImGui interface for real-time inspection and tuning.
-- Integrated OpenGL visualization for particles, spring types, meshes, lighting, and shadows.
+**Source:** [`integrator.cpp`](HW1/src/simulation/integrator.cpp) · [`massSpringSystem.cpp`](HW1/src/simulation/massSpringSystem.cpp) · [`jelly.cpp`](HW1/src/simulation/jelly.cpp)
 
-### Engineering focus
+**Recorded results:** [`result1.mp4`](HW1/utility/result1.mp4) · [`result2.mp4`](HW1/utility/result2.mp4) · [`result3.mp4`](HW1/utility/result3.mp4)
 
-This project exposed the stability trade-offs between integration schemes. The interface allows spring stiffness, damping, time step, and integration mode to be changed while the simulation is running, making unstable oscillation and numerical damping directly observable.
+## HW2 — Inverse Kinematics
 
-<!-- Add a side-by-side GIF or image comparing two integrators under identical parameters. -->
-![Soft-body simulation](docs/media/hw1-soft-body.gif)
+A skeletal-animation project supporting Acclaim ASF/AMC motion data, hierarchical forward kinematics, and interactive inverse kinematics.
 
-**Relevant code:** [`integrator.cpp`](HW1/src/simulation/integrator.cpp) · [`massSpringSystem.cpp`](HW1/src/simulation/massSpringSystem.cpp)
+Key systems in the source:
 
-## 2. Inverse Kinematics
+- Hierarchical bone transforms
+- Jacobian construction for an articulated chain
+- Pseudoinverse-based IK updates
+- Iterative end-effector target solving
+- Animated posture and skeleton rendering
 
-A skeletal-animation system supporting Acclaim ASF/AMC motion data, hierarchical forward kinematics, and interactive inverse kinematics.
+**Source:** [`kinematics.cpp`](HW2/src/simulation/kinematics.cpp) · [`motion.cpp`](HW2/src/acclaim/motion.cpp) · [`skeleton.cpp`](HW2/src/acclaim/skeleton.cpp)
 
-### What I implemented
+## HW3 — 2D Fluid Simulation
 
-- Traversed the skeleton hierarchy to compute global bone transforms with forward kinematics.
-- Built the Jacobian for an articulated bone chain.
-- Solved the IK update with a pseudoinverse-based linear solver.
-- Iteratively updated joint rotations to move the end effector toward a user-defined target.
-- Applied joint updates back to the animated posture and refreshed the rendered skeleton.
+A real-time particle fluid simulation using a staggered MAC grid and a hybrid PIC/FLIP update.
 
-### Engineering focus
+The simulation loop includes particle integration, collision handling, particle-to-grid transfer, density and divergence correction, and grid-to-particle velocity transfer.
 
-The main challenge was connecting local joint rotations, hierarchical transforms, and the end-effector error in a consistent coordinate system. The solver separates Jacobian construction from the linear solve, which makes the numerical method easier to inspect and modify.
+**Source:** [`fluid.cpp`](HW3/src/fluid.cpp)
 
-<!-- Add a GIF showing the target moving while the chain follows it. -->
-![Inverse kinematics](docs/media/hw2-inverse-kinematics.gif)
+## Final Project — Interactive Character Animation
 
-**Relevant code:** [`kinematics.cpp`](HW2/src/simulation/kinematics.cpp) · [`motion.cpp`](HW2/src/acclaim/motion.cpp)
+A Unity project built around authored character sequences. The repository includes scene logic for story progression, facial expressions, fog, white balance, walking audio, and runtime object parenting.
 
-## 3. 2D Fluid Simulation
+**Main scene:** [`Main Scene.unity`](Final%20Project/Assets/Scenes/Main%20Scene.unity)
 
-A real-time particle fluid simulation using a hybrid Particle-in-Cell / Fluid-Implicit-Particle pipeline on a staggered MAC grid.
+**Project scripts:**
 
-### What I implemented
-
-- Advanced particles under gravity and resolved particle–boundary and particle–obstacle collisions.
-- Transferred velocity between particles and the MAC grid with bilinear weights.
-- Blended PIC and FLIP velocity updates through an adjustable FLIP ratio.
-- Classified fluid, air, and solid cells from the particle distribution.
-- Enforced approximate incompressibility by iteratively correcting grid divergence.
-- Estimated cell density and added density correction to reduce particle compression.
-- Added an interactive obstacle and particle/cell visualization modes.
-
-### Simulation pipeline
-
-1. Integrate particle motion.
-2. Relax overlapping particles.
-3. Handle boundary and interactive-obstacle collisions.
-4. Transfer particle velocities to the MAC grid.
-5. Estimate density and correct velocity divergence.
-6. Transfer the corrected grid velocities back to particles using the PIC/FLIP blend.
-
-<!-- Add one clean GIF with the obstacle interacting with the fluid. -->
-![PIC/FLIP fluid simulation](docs/media/hw3-fluid.gif)
-
-**Relevant code:** [`fluid.cpp`](HW3/src/fluid.cpp)
-
-## 4. Interactive Character Animation — Team Project
-
-A Unity-based interactive story composed of eight cinematic sequences. The project combines customizable characters, authored Timeline sequences, facial expressions, inverse-kinematics-assisted interactions, and synchronized environmental effects.
-
-### Team result
-
-- Integrated Ready Player Me characters into a Unity URP project.
-- Authored and triggered eight Timeline-based story sequences.
-- Coordinated facial expressions, lighting, fog, color temperature, sound effects, and character interactions through Timeline signals and C# components.
-- Used hand IK and runtime parent–child changes for character–object interaction.
-
-### My contributions
-
-- Created the character-animation sequences in Unity Timeline.
-- Arranged animation clips and Timeline tracks to control the pacing and progression of the story scenes.
-- Coordinated character actions with scene timing to produce the final cinematic presentation.
-
-My teammate was responsible for sourcing the environmental and scene assets used in the project.
-
-<!-- Add a short final-project trailer or representative sequence. -->
-![Interactive character animation](docs/media/final-project.gif)
+- [`StoryBoardManager.cs`](Final%20Project/Assets/Scripts/StoryBoardManager.cs)
+- [`FacialExpressionController.cs`](Final%20Project/Assets/Scripts/FacialExpressionController.cs)
+- [`Fog Controller.cs`](Final%20Project/Assets/Scripts/Fog%20Controller.cs)
+- [`WhiteBalanceController.cs`](Final%20Project/Assets/Scripts/WhiteBalanceController.cs)
+- [`WalkingSound.cs`](Final%20Project/Assets/Scripts/WalkingSound.cs)
+- [`AddParent.cs`](Final%20Project/Assets/Scripts/AddParent.cs)
 
 ## Repository Structure
 
 ```text
 .
-├── HW1/                  # 3D mass–spring soft-body simulation
-├── HW2/                  # Forward and inverse skeletal kinematics
+├── HW1/                  # Soft-body simulation
+├── HW2/                  # Forward and inverse kinematics
 ├── HW3/                  # 2D PIC/FLIP fluid simulation
-├── Final Project/        # Unity team project
-└── docs/media/           # Portfolio images and GIFs to add
+└── Final Project/        # Unity character-animation project
 ```
 
 ## Build and Run
 
 ### C++ assignments
 
-The recommended environment is Windows with Visual Studio 2019 or 2022. Each assignment includes its own solution file.
+The repository includes Visual Studio solutions:
 
 ```text
 HW1/SoftSim.sln
@@ -134,43 +88,15 @@ HW2/InverseKinematics.sln
 HW3/2dFluidSim.sln
 ```
 
-Open the required solution, select the Release or Debug configuration, build, and run the generated executable. The projects use OpenGL, GLFW, Eigen, ImGui, GLAD, and stb_image; bundled third-party dependencies are located in the project vendor/extern directories.
-
-A CMake configuration is also included for the C++ assignments, but Windows/Visual Studio is the tested setup.
-
-```bash
-cmake -S HW1 -B build/HW1
-cmake --build build/HW1 --config Release --parallel
-```
-
-Repeat with `HW2` or `HW3` as needed.
+Open the required solution in Visual Studio, select a build configuration, and run the generated executable. Each project also contains its own CMake configuration.
 
 ### Unity final project
 
-1. Install Unity 2022 LTS.
-2. Add `Final Project` through Unity Hub.
+1. Install Unity `2022.3.11f1`.
+2. Add the `Final Project` directory through Unity Hub.
 3. Open `Assets/Scenes/Main Scene.unity`.
 4. Enter Play Mode.
-5. Press number keys `1`–`8` to trigger the corresponding story sequences.
-
-## Controls
-
-| Project | Controls |
-| --- | --- |
-| HW1 | Use ImGui to select the integrator and tune simulation parameters; press `Space` to pause/resume. |
-| HW2 | Load an ASF/AMC motion and manipulate the IK target through the application controls. |
-| HW3 | Drag with the mouse to move the obstacle; use the interface to change the PIC/FLIP ratio and rendering mode. |
-| Final Project | Press `1`–`8` to play Timeline sequences. |
 
 ## Technologies
 
-`C++` · `OpenGL` · `GLSL` · `Eigen` · `GLFW` · `ImGui` · `CMake` · `Unity 2022 LTS` · `C#` · `URP` · `Timeline`
-
-## Acknowledgments
-
-These projects were developed for a Computer Animation course. The repository includes course-provided starter code, frameworks, and third-party dependencies where applicable. Unless otherwise noted, HW1–HW3 were completed individually; the Unity final project was collaborative.
-
-## Author
-
-**Po-Jen Cheng**  
-M.S. student working on computer graphics, mixed reality, and interactive systems.
+`C++` · `OpenGL` · `GLSL` · `Eigen` · `GLFW` · `ImGui` · `CMake` · `Unity 2022.3.11f1` · `C#` · `URP` · `Timeline`
