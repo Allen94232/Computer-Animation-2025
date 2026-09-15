@@ -1,39 +1,40 @@
-# Computer Animation and Special Effects HW3
+# HW2 — Inverse Kinematics
 
-## Build on Microsoft Windows with Visual Studio 2017/2019
+This assignment implements skeletal forward and inverse kinematics with Acclaim ASF/AMC motion data. The application loads an articulated skeleton, evaluates hierarchical transforms, and iteratively moves an end effector toward a target using a Jacobian-based solver.
 
-### Instruction
+## Key Source Files
 
-- Open InverseKinematics.sln
-- Build
-- Executable will be in ./bin
+- [`src/simulation/kinematics.cpp`](src/simulation/kinematics.cpp): forward- and inverse-kinematics calculations
+- [`src/acclaim/skeleton.cpp`](src/acclaim/skeleton.cpp): skeleton loading and hierarchy handling
+- [`src/acclaim/motion.cpp`](src/acclaim/motion.cpp): motion data handling
+- [`InverseKinematics/main.cpp`](InverseKinematics/main.cpp): application entry point
 
-## Build on other platforms and/or compilers
+## Build on Windows
 
-### :warning: **This method is not well-tested, so it may not work properly.**
+The tested project configuration uses Visual Studio.
 
-### :warning: **Thus, you are expected to solve buggy or trivial problems yourself.**
+1. Open `InverseKinematics.sln`.
+2. Select a Debug or Release configuration.
+3. Build the solution.
+4. Run the executable generated under `bin/`.
 
-### Some tested platforms (cmake 3.20):
+## Build with CMake
 
-- Ubuntu Groovy Gorilla (20.10) with GCC   10.2.0
+The CMake path is provided for other toolchains but may require platform-specific dependency setup.
 
-### Prerequisite
+Requirements:
 
-- [Cmake](https://cmake.org) (version >= 3.14)
-- Compiler (e.g. GCC)
+- CMake 3.14 or later
+- A C++ compiler
+- A supported OpenGL windowing environment
 
-### Instruction
-
-- Run:
-```bash=
+```bash
 cmake -S . -B build
-cmake --build build --config Release --parallel 8
+cmake --build build --config Release --parallel
 ```
-- Executable will be in ./bin
 
-### If you are building on Linux, you need one of these dependencies, usually `xorg-dev`
+On Linux, GLFW may require X11, Wayland, or OSMesa development packages. For example, an X11 setup commonly uses `xorg-dev`.
 
-- `xorg-dev` (For X11)
-- `libwayland-dev wayland-protocols extra-cmake-modules libxkbcommon-dev` (For Wayland)
-- `libosmesa6-dev` (For OSMesa)
+## Repository Context
+
+See the [repository README](../README.md#hw2--inverse-kinematics) for the project overview and links to the other assignments.
