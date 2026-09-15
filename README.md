@@ -97,6 +97,10 @@ Open the required solution in Visual Studio, select a build configuration, and r
 3. Open `Assets/Scenes/Main Scene.unity`.
 4. Enter Play Mode.
 
+## Third-Party Assets
+
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the verified repository inventory and items that still require a redistribution-license check.
+
 ## Technologies
 
 `C++` · `OpenGL` · `GLSL` · `Eigen` · `GLFW` · `ImGui` · `CMake` · `Unity 2022.3.11f1` · `C#` · `URP` · `Timeline`
