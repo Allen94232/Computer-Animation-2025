@@ -27,9 +27,8 @@ First step: Search TODO comments to find the methods that you need to implement.
 
 // Global variables are evil!
 namespace {
-// TODO#0
-// Please change this c string to your student ID
-constexpr const char* studentID = "110550043";
+// Identifier displayed by the assignment UI; keep it anonymous in the public repository.
+constexpr const char* studentID = "anonymous";
 // Shadow texture size, default is 8192 * 8192
 // If shadow render time in debug panel with vsync OFF is too high, you can
 // reduce it to 1024 * 1024 or lower but it will result in low shadow quality

@@ -148,3 +148,6 @@ wwise_ids.h
 # Fmod
 fmod.log
 fmod_editor.log
+
+# Unity Version Control conflict copies
+*.private.*
